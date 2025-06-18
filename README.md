@@ -28,6 +28,15 @@ to your `app` folder. The affected files can be copied or merged from
 Copy `env` to `.env` and tailor for your app, specifically the baseURL
 and any database settings.
 
+The application reads database credentials from the following environment variables:
+
+- `database.default.hostname`
+- `database.default.username`
+- `database.default.password`
+- `database.default.database`
+
+If these are not set, the defaults from `app/Config/Database.php` will be used.
+
 ## Important Change with index.php
 
 `index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
