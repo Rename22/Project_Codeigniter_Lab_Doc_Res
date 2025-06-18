@@ -26,5 +26,8 @@ $routes->get('docente/edit/(:num)', 'Docente::edit/$1');
 $routes->post('docente/update/(:num)', 'Docente::update/$1');
 $routes->delete('docente/delete/(:num)', 'Docente::delete/$1');
 
+// Rutas para Reservas
+$routes->get('reserva', 'Reserva::index');
+
 // Habilitar URLs amigables
 $routes->setAutoRoute(true);
