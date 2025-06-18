@@ -135,6 +135,10 @@ $session = session();
         } else {
             console.error('No se encontró la tabla');
         }
+
+        <?php if (session()->has('debugError')): ?>
+        console.error('DB Error:', <?= json_encode(session('debugError')) ?>);
+        <?php endif; ?>
     });
 </script>
 
