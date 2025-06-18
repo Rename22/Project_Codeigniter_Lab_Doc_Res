@@ -30,6 +30,7 @@ class Database extends Config
         'username'     => 'postgres',
         'password'     => 'Root',
         'database'     => 'ciya25',
+        'schema'       => 'laboratorios',
         'DBDriver'     => 'Postgre',
         'DBPrefix'     => '',
         'pConnect'     => false,

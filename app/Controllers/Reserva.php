@@ -27,11 +27,12 @@ class Reserva extends Controller
                 'toastType' => 'success',
             ]);
             return view('reserva/listReserva', ['reservas' => $reservas]);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             log_message('error', 'Error al obtener las reservas: ' . $e->getMessage());
             $session->setFlashdata([
-                'error'     => 'No se pudo conectar a la base de datos',
-                'toastType' => 'error',
+                'error'      => 'No se pudo conectar a la base de datos',
+                'toastType'  => 'error',
+                'debugError' => $e->getMessage(),
             ]);
             return view('reserva/listReserva', ['reservas' => []]);
         }

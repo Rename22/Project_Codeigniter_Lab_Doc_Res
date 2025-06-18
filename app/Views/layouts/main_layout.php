@@ -92,20 +92,20 @@
     <script>
         // Manejar mensajes de sesión
         $(document).ready(function() {
-            <?php if (session()->has('success')): ?>
+            <?php if ($msg = session()->getFlashdata('success')): ?>
                 iziToast.success({
                     title: 'Éxito',
-                    message: "<?= session('success') ?>",
+                    message: "<?= $msg ?>",
                     position: 'topRight',
                     timeout: 3000,
                     progressBar: true
                 });
             <?php endif; ?>
 
-            <?php if (session()->has('error')): ?>
+            <?php if ($err = session()->getFlashdata('error')): ?>
                 iziToast.error({
                     title: 'Error',
-                    message: "<?= session('error') ?>",
+                    message: "<?= $err ?>",
                     position: 'topRight',
                     timeout: 3000,
                     progressBar: true
@@ -169,9 +169,14 @@
 
     <script>
         $(document).ready(function() {
-            <?php if (session()->has('toastType')): ?>
-                const message = session('success') || session('error');
-                const type = session('toastType');
+            <?php
+                $toastType = session()->getFlashdata('toastType');
+                $successMsg = session()->getFlashdata('success');
+                $errorMsg   = session()->getFlashdata('error');
+                if ($toastType):
+            ?>
+                const message = "<?= $successMsg ?? $errorMsg ?>";
+                const type = "<?= $toastType ?>";
                 
                 switch(type) {
                     case 'success':
