@@ -15,22 +15,10 @@ class Reserva extends Controller
     public function index()
     {
         $session = session();
-        $db = \Config\Database::connect();
-        if ($db->connID) {
-            log_message('info', 'Conexión a la base de datos exitosa');
-            $session->setFlashdata([
-                'success'   => 'Conexión a la base de datos exitosa',
-                'toastType' => 'success',
-            ]);
-        } else {
-            log_message('error', 'No se pudo conectar a la base de datos');
-            $session->setFlashdata([
-                'error'     => 'No se pudo conectar a la base de datos',
-                'toastType' => 'error',
-            ]);
-        }
 
         try {
+            $db = \Config\Database::connect();
+            $db->initialize();
             $model = new ReservaModel();
             $reservas = $model->findAll();
             log_message('info', 'Reservas obtenidas: ' . count($reservas));
@@ -42,7 +30,7 @@ class Reserva extends Controller
         } catch (\Exception $e) {
             log_message('error', 'Error al obtener las reservas: ' . $e->getMessage());
             $session->setFlashdata([
-                'error'     => 'Error al obtener las reservas',
+                'error'     => 'No se pudo conectar a la base de datos',
                 'toastType' => 'error',
             ]);
             return view('reserva/listReserva', ['reservas' => []]);

@@ -193,6 +193,11 @@ class Database extends Config
     {
         parent::__construct();
 
+        $this->default['hostname'] = getenv('database.default.hostname') ?: $this->default['hostname'];
+        $this->default['username'] = getenv('database.default.username') ?: $this->default['username'];
+        $this->default['password'] = getenv('database.default.password') ?: $this->default['password'];
+        $this->default['database'] = getenv('database.default.database') ?: $this->default['database'];
+
         // Ensure that we always set the database group to 'tests' if
         // we are currently running an automated test suite, so that
         // we don't overwrite live data on accident.
