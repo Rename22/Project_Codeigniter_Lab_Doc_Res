@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class ReservaModel extends Model
 {
-    protected $table = 'laboratorios.reserva';
+    protected $table = 'reserva';
     protected $primaryKey = 'id_reserva';
     protected $allowedFields = [
         'fk_id_lab',
