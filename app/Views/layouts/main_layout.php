@@ -33,11 +33,9 @@
                         <a class="nav-link text-white" href="<?= base_url('docente') ?>">Docentes</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="<?= base_url('reserva') ?>">Reservas</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link text-white" href="<?= base_url('otros') ?>">Otro Listado</a>
                     </li>
+                    <!-- Agregar más botones según sea necesario -->
                 </ul>
             </div>
 
