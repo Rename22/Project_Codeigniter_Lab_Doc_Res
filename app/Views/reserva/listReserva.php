@@ -27,15 +27,15 @@ $session = session();
             </div>
 
             <!-- Mensajes de sesión -->
-            <?php if (session()->has('error')): ?>
+            <?php if ($error = session()->getFlashdata('error')): ?>
                 <div class="alert alert-danger">
-                    <?= session('error') ?>
+                    <?= $error ?>
                 </div>
             <?php endif; ?>
-            
-            <?php if (session()->has('success')): ?>
+
+            <?php if ($success = session()->getFlashdata('success')): ?>
                 <div class="alert alert-success">
-                    <?= session('success') ?>
+                    <?= $success ?>
                 </div>
             <?php endif; ?>
 
@@ -136,8 +136,8 @@ $session = session();
             console.error('No se encontró la tabla');
         }
 
-        <?php if (session()->has('debugError')): ?>
-        console.error('DB Error:', <?= json_encode(session('debugError')) ?>);
+        <?php if ($debug = session()->getFlashdata('debugError')): ?>
+        console.error('DB Error:', <?= json_encode($debug) ?>);
         <?php endif; ?>
     });
 </script>
