@@ -1,6 +1,9 @@
 <?php
+$this->extend('layouts/main_layout');
 $session = session();
 ?>
+
+<?= $this->section('content'); ?>
 
 <div class="container-fluid">
     <div class="row">
@@ -134,3 +137,5 @@ $session = session();
         }
     });
 </script>
+
+<?= $this->endSection(); ?>
