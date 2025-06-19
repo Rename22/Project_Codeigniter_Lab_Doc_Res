@@ -14,7 +14,7 @@
                     </ul>
                 </div>
             <?php endif; ?>
-
+            <form action="<?= site_url('reserva/update/' . $reserva['id_res']) ?>" method="post">
             <form action="<?= site_url('reserva/update/' . $reserva['id_reserva']) ?>" method="post">
                 <?= csrf_field() ?>
                 <div class="form-group">
