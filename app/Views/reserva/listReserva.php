@@ -84,27 +84,4 @@
     </div>
 </div>
 
-<!-- Cargar las dependencias de jQuery y DataTables -->
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"></script>
-
-<script>
-    $(document).ready(function() {
-        // Inicializar DataTable solo si hay datos
-        <?php if (!empty($reservas)): ?>
-            $('#reservaTable').DataTable({
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"
-                },
-                "columnDefs": [
-                    { "orderable": false, "targets": [9] } // Deshabilitar orden en columna de acciones
-                ],
-                "scrollX": true,  // Activar desplazamiento horizontal
-                "responsive": true // Hacer la tabla responsive
-            });
-        <?php endif; ?>
-    });
-</script>
-
 <?= $this->endSection() ?>

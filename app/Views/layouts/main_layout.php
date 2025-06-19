@@ -2,79 +2,225 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Reservas</title>
-    
+    <title>Laboratorios</title>
+
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- iziToast CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.css">
+
     <!-- DataTables CSS -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
-    
-    <style>
-        .sidebar {
-            min-height: 100vh;
-            background: #343a40;
-        }
-        .sidebar .nav-link {
-            color: rgba(255,255,255,.5);
-        }
-        .sidebar .nav-link:hover {
-            color: rgba(255,255,255,.75);
-        }
-        .sidebar .nav-link.active {
-            color: #fff;
-            font-weight: bold;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
 </head>
 <body>
     <div class="container-fluid">
         <div class="row">
-            <!-- Sidebar -->
-            <div class="col-md-2 sidebar p-0">
-                <div class="p-4">
-                    <h4 class="text-white text-center mb-4">Menú Principal</h4>
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link" href="<?= base_url('/') ?>">
-                                <i class="fas fa-flask me-2"></i> Laboratorios
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="<?= base_url('docente') ?>">
-                                <i class="fas fa-chalkboard-teacher me-2"></i> Docentes
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="<?= base_url('reserva') ?>">
-                                <i class="fas fa-calendar-check me-2"></i> Reservas
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+            <!-- Barra lateral izquierda -->
+            <div class="col-md-2 bg-dark text-white p-4">
+                <h3 class="text-center">Menú</h3>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="<?= base_url('/') ?>">Laboratorios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="<?= base_url('docente') ?>">Docentes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="<?= base_url('reserva') ?>">Reservas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="<?= base_url('otros') ?>">Otro Listado</a>
+                    </li>
+                    <!-- Agregar más botones según sea necesario -->
+                </ul>
             </div>
-            
-            <!-- Main Content -->
-            <div class="col-md-10 p-4">
-                <?= $this->renderSection('content') ?>
+
+            <!-- Contenido principal -->
+            <div class="col-md-10">
+                <?= $this->renderSection('content'); ?>
             </div>
         </div>
     </div>
 
     <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-    
-    <!-- Bootstrap Bundle -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- DataTables -->
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
-    <?= $this->renderSection('scripts') ?>
+    <!-- DataTables -->
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            // Inicializar DataTables para todas las tablas con clase 'datatable'
+            $('.datatable').DataTable({
+                "scrollX": true,
+                "responsive": true,
+                "language": {
+                    "sEmptyTable": "No hay datos disponibles en la tabla",
+                    "sInfo": "Mostrando _START_ a _END_ de _TOTAL_ entradas",
+                    "sInfoEmpty": "Mostrando 0 a 0 de 0 entradas",
+                    "sInfoFiltered": "(filtrado de _MAX_ entradas totales)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sLengthMenu": "Mostrar _MENU_ entradas",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sPrevious": "Anterior",
+                        "sNext": "Siguiente",
+                        "sLast": "Último"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": activar para ordenar la columna de manera descendente"
+                    }
+                }
+            });
+        });
+    </script>
+
+    <!-- iziToast JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+
+    <script>
+        // Manejar mensajes de sesión
+        $(document).ready(function() {
+            <?php if (session()->has('success')): ?>
+                iziToast.success({
+                    title: 'Éxito',
+                    message: "<?= session('success') ?>",
+                    position: 'topRight',
+                    timeout: 3000,
+                    progressBar: true
+                });
+            <?php endif; ?>
+
+            <?php if (session()->has('error')): ?>
+                iziToast.error({
+                    title: 'Error',
+                    message: "<?= session('error') ?>",
+                    position: 'topRight',
+                    timeout: 3000,
+                    progressBar: true
+                });
+            <?php endif; ?>
+        });
+    </script>
+
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Funciones para mostrar mensajes -->
+    <script>
+        // Mostrar mensaje de éxito
+        function showSuccess(message) {
+            iziToast.success({
+                title: 'Éxito',
+                message: message,
+                position: 'topRight',
+                timeout: 3000,
+                progressBar: true
+            });
+        }
+
+        // Mostrar mensaje de error
+        function showError(message) {
+            iziToast.error({
+                title: 'Error',
+                message: message,
+                position: 'topRight',
+                timeout: 3000,
+                progressBar: true
+            });
+        }
+
+        // Mostrar mensaje de advertencia
+        function showWarning(message) {
+            iziToast.warning({
+                title: 'Advertencia',
+                message: message,
+                position: 'topRight',
+                timeout: 3000,
+                progressBar: true
+            });
+        }
+
+        // Mostrar mensaje de información
+        function showInfo(message) {
+            iziToast.info({
+                title: 'Información',
+                message: message,
+                position: 'topRight',
+                timeout: 3000,
+                progressBar: true
+            });
+        }
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            <?php if (session()->has('toastType')): ?>
+                const message = session('success') || session('error');
+                const type = session('toastType');
+                
+                switch(type) {
+                    case 'success':
+                        showSuccess(message);
+                        break;
+                    case 'error':
+                        showError(message);
+                        break;
+                    case 'warning':
+                        showWarning(message);
+                        break;
+                    case 'info':
+                        showInfo(message);
+                        break;
+                    default:
+                        showInfo(message);
+                }
+            <?php endif; ?>
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            // Inicializar DataTable con las opciones necesarias y en español
+            $('#laboratorioTable').DataTable({
+                "scrollX": true,  // Habilitar desplazamiento horizontal
+                "responsive": true,  // Hacer la tabla responsive
+                "language": {
+                    "sEmptyTable": "No hay datos disponibles en la tabla",
+                    "sInfo": "Mostrando _START_ a _END_ de _TOTAL_ entradas",
+                    "sInfoEmpty": "Mostrando 0 a 0 de 0 entradas",
+                    "sInfoFiltered": "(filtrado de _MAX_ entradas totales)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sLengthMenu": "Mostrar _MENU_ entradas",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sPrevious": "Anterior",
+                        "sNext": "Siguiente",
+                        "sLast": "Último"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": activar para ordenar la columna de manera descendente"
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>
