@@ -18,7 +18,8 @@ class ReservaModel extends Model
         'motivo_reserva',
     ];
 
-    protected $useTimestamps = false;
-    protected $createdField  = 'fecha_creacion_reserva';
-    protected $updatedField  = 'fecha_actualizacion_reserva';
+    public function getAllReservas()
+    {
+        return $this->findAll();
+    }
 }

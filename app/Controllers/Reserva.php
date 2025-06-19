@@ -7,34 +7,36 @@ use CodeIgniter\Controller;
 
 class Reserva extends Controller
 {
+    protected $model;
+
     public function __construct()
     {
-        helper('session');
+        $this->model = new ReservaModel();
     }
 
     public function index()
     {
-        $session = session();
-
         try {
-            $db = \Config\Database::connect();
-            $db->initialize();
-            $model = new ReservaModel();
-            $reservas = $model->findAll();
-            log_message('info', 'Reservas obtenidas: ' . count($reservas));
-            $session->setFlashdata([
-                'success'   => 'Reservas obtenidas: ' . count($reservas),
-                'toastType' => 'success',
+            $data = [
+                'reservas' => $this->model->getAllReservas(),
+                'title' => 'Listado de Reservas'
+            ];
+            
+            return view('reserva/listReserva', $data);
+        } catch (\Exception $e) {
+            return view('errors/html/error_500', [
+                'message' => 'Error al cargar las reservas: ' . $e->getMessage()
             ]);
-            return view('reserva/listReserva', ['reservas' => $reservas]);
-        } catch (\Throwable $e) {
-            log_message('error', 'Error al obtener las reservas: ' . $e->getMessage());
-            $session->setFlashdata([
-                'error'      => 'No se pudo conectar a la base de datos',
-                'toastType'  => 'error',
-                'debugError' => $e->getMessage(),
-            ]);
-            return view('reserva/listReserva', ['reservas' => []]);
+        }
+    }
+
+    public function delete($id)
+    {
+        try {
+            $this->model->delete($id);
+            return redirect()->to('/reserva')->with('success', 'Reserva eliminada correctamente');
+        } catch (\Exception $e) {
+            return redirect()->to('/reserva')->with('error', 'Error al eliminar reserva: ' . $e->getMessage());
         }
     }
 }

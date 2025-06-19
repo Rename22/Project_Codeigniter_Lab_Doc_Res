@@ -8,6 +8,9 @@ use CodeIgniter\Router\RouteCollection;
 $routes->setDefaultNamespace('App\Controllers');
 $routes->setDefaultController('Laboratorio');
 $routes->setDefaultMethod('index');
+$routes->setTranslateURIDashes(false);
+$routes->set404Override();
+$routes->setAutoRoute(false);
 
 // Rutas principales
 $routes->get('/', 'Laboratorio::index');
@@ -28,6 +31,4 @@ $routes->delete('docente/delete/(:num)', 'Docente::delete/$1');
 
 // Rutas para Reservas
 $routes->get('reserva', 'Reserva::index');
-
-// Habilitar URLs amigables
-$routes->setAutoRoute(true);
+$routes->get('reserva/delete/(:num)', 'Reserva::delete/$1');
