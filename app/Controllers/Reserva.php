@@ -35,28 +35,47 @@ class Reserva extends Controller
 
     public function create()
     {
-        $laboratorioModel = new LaboratorioModel();
-        $docenteModel     = new DocenteModel();
 
-        $data = [
-            'laboratorios' => $laboratorioModel->findAll(),
-            'docentes'     => $docenteModel->findAll(),
-        ];
+        return view('reserva/addReserva');
 
-        return view('reserva/addReserva', $data);
     }
 
     public function store()
     {
         try {
             $data = [
-                'fk_id_lab'          => $this->request->getPost('fk_id_lab'),
-                'fk_id_doc'          => $this->request->getPost('fk_id_doc'),
-                'fecha_reserva'      => $this->request->getPost('fecha_reserva'),
-                'hora_inicio_reserva'=> $this->request->getPost('hora_inicio_reserva'),
-                'hora_fin_reserva'   => $this->request->getPost('hora_fin_reserva'),
-                'estado_reserva'     => $this->request->getPost('estado_reserva'),
-                'motivo_reserva'     => $this->request->getPost('motivo_reserva'),
+
+                'fk_id_tipres'                  => $this->request->getPost('fk_id_tipres'),
+                'fk_id_doc'                    => $this->request->getPost('fk_id_doc'),
+                'fk_id_lab'                    => $this->request->getPost('fk_id_lab'),
+                'fk_id_area'                   => $this->request->getPost('fk_id_area'),
+                'fk_id_guia'                   => $this->request->getPost('fk_id_guia'),
+                'tema_res'                     => $this->request->getPost('tema_res'),
+                'comentario_res'               => $this->request->getPost('comentario_res'),
+                'estado_res'                   => $this->request->getPost('estado_res'),
+                'fecha_hora_res'               => $this->request->getPost('fecha_hora_res'),
+                'duracion_res'                 => $this->request->getPost('duracion_res'),
+                'numero_participantes_res'     => $this->request->getPost('numero_participantes_res'),
+                'descripcion_participantes_res'=> $this->request->getPost('descripcion_participantes_res'),
+                'materiales_res'               => $this->request->getPost('materiales_res'),
+                'fecha_creacion_res'           => $this->request->getPost('fecha_creacion_res'),
+                'fecha_actualizacion_res'      => $this->request->getPost('fecha_actualizacion_res'),
+                'usuario_creacion_res'         => $this->request->getPost('usuario_creacion_res'),
+                'usuario_actualizacion_res'    => $this->request->getPost('usuario_actualizacion_res'),
+                'fecha_hora_fin_res'           => $this->request->getPost('fecha_hora_fin_res'),
+                'observaciones_finales_res'    => $this->request->getPost('observaciones_finales_res'),
+                'asistencia_res'               => $this->request->getPost('asistencia_res'),
+                'guia_adjunta_res'             => $this->request->getPost('guia_adjunta_res'),
+                'curso_res'                    => $this->request->getPost('curso_res'),
+                'materia_res'                  => $this->request->getPost('materia_res'),
+                'fk_id_car'                    => $this->request->getPost('fk_id_car'),
+                'paralelo_res'                 => $this->request->getPost('paralelo_res'),
+                'tipo_texto_res'               => $this->request->getPost('tipo_texto_res'),
+                'fk_id_usu'                    => $this->request->getPost('fk_id_usu'),
+                'software_res'                 => $this->request->getPost('software_res'),
+                'tipo_res'                     => $this->request->getPost('tipo_res'),
+                'pedidodocente_res'            => $this->request->getPost('pedidodocente_res'),
+
             ];
 
             if ($this->model->save($data)) {
@@ -80,29 +99,47 @@ class Reserva extends Controller
             return redirect()->back()->with('error', 'Reserva no encontrada');
         }
 
-        $laboratorioModel = new LaboratorioModel();
-        $docenteModel     = new DocenteModel();
 
-        $data = [
-            'reserva'      => $reserva,
-            'laboratorios' => $laboratorioModel->findAll(),
-            'docentes'     => $docenteModel->findAll(),
-        ];
+        return view('reserva/editReserva', ['reserva' => $reserva]);
 
-        return view('reserva/editReserva', $data);
     }
 
     public function update($id)
     {
         try {
             $data = [
-                'fk_id_lab'          => $this->request->getPost('fk_id_lab'),
-                'fk_id_doc'          => $this->request->getPost('fk_id_doc'),
-                'fecha_reserva'      => $this->request->getPost('fecha_reserva'),
-                'hora_inicio_reserva'=> $this->request->getPost('hora_inicio_reserva'),
-                'hora_fin_reserva'   => $this->request->getPost('hora_fin_reserva'),
-                'estado_reserva'     => $this->request->getPost('estado_reserva'),
-                'motivo_reserva'     => $this->request->getPost('motivo_reserva'),
+
+                'fk_id_tipres'                  => $this->request->getPost('fk_id_tipres'),
+                'fk_id_doc'                    => $this->request->getPost('fk_id_doc'),
+                'fk_id_lab'                    => $this->request->getPost('fk_id_lab'),
+                'fk_id_area'                   => $this->request->getPost('fk_id_area'),
+                'fk_id_guia'                   => $this->request->getPost('fk_id_guia'),
+                'tema_res'                     => $this->request->getPost('tema_res'),
+                'comentario_res'               => $this->request->getPost('comentario_res'),
+                'estado_res'                   => $this->request->getPost('estado_res'),
+                'fecha_hora_res'               => $this->request->getPost('fecha_hora_res'),
+                'duracion_res'                 => $this->request->getPost('duracion_res'),
+                'numero_participantes_res'     => $this->request->getPost('numero_participantes_res'),
+                'descripcion_participantes_res'=> $this->request->getPost('descripcion_participantes_res'),
+                'materiales_res'               => $this->request->getPost('materiales_res'),
+                'fecha_creacion_res'           => $this->request->getPost('fecha_creacion_res'),
+                'fecha_actualizacion_res'      => $this->request->getPost('fecha_actualizacion_res'),
+                'usuario_creacion_res'         => $this->request->getPost('usuario_creacion_res'),
+                'usuario_actualizacion_res'    => $this->request->getPost('usuario_actualizacion_res'),
+                'fecha_hora_fin_res'           => $this->request->getPost('fecha_hora_fin_res'),
+                'observaciones_finales_res'    => $this->request->getPost('observaciones_finales_res'),
+                'asistencia_res'               => $this->request->getPost('asistencia_res'),
+                'guia_adjunta_res'             => $this->request->getPost('guia_adjunta_res'),
+                'curso_res'                    => $this->request->getPost('curso_res'),
+                'materia_res'                  => $this->request->getPost('materia_res'),
+                'fk_id_car'                    => $this->request->getPost('fk_id_car'),
+                'paralelo_res'                 => $this->request->getPost('paralelo_res'),
+                'tipo_texto_res'               => $this->request->getPost('tipo_texto_res'),
+                'fk_id_usu'                    => $this->request->getPost('fk_id_usu'),
+                'software_res'                 => $this->request->getPost('software_res'),
+                'tipo_res'                     => $this->request->getPost('tipo_res'),
+                'pedidodocente_res'            => $this->request->getPost('pedidodocente_res'),
+
             ];
 
             if ($this->model->update($id, $data)) {
