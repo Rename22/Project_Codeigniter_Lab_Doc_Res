@@ -95,7 +95,7 @@
             <?php if (session()->has('success')): ?>
                 iziToast.success({
                     title: 'Éxito',
-                    message: "<?= session('success') ?>",
+                    message: <?= json_encode(session('success')) ?>,
                     position: 'topRight',
                     timeout: 3000,
                     progressBar: true
@@ -105,7 +105,7 @@
             <?php if (session()->has('error')): ?>
                 iziToast.error({
                     title: 'Error',
-                    message: "<?= session('error') ?>",
+                    message: <?= json_encode(session('error')) ?>,
                     position: 'topRight',
                     timeout: 3000,
                     progressBar: true
@@ -170,8 +170,8 @@
     <script>
         $(document).ready(function() {
             <?php if (session()->has('toastType')): ?>
-                const message = session('success') || session('error');
-                const type = session('toastType');
+                const message = <?= json_encode(session('success') ?? session('error')) ?>;
+                const type = <?= json_encode(session('toastType')) ?>;
                 
                 switch(type) {
                     case 'success':

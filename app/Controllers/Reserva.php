@@ -37,6 +37,7 @@ class Reserva extends Controller
     {
         return view('reserva/addReserva');
 
+
     }
 
     public function store()
@@ -74,6 +75,7 @@ class Reserva extends Controller
                 'tipo_res'                     => $this->request->getPost('tipo_res'),
                 'pedidodocente_res'            => $this->request->getPost('pedidodocente_res'),
 
+
             ];
 
             if ($this->model->save($data)) {
@@ -96,7 +98,6 @@ class Reserva extends Controller
         if (!$reserva) {
             return redirect()->back()->with('error', 'Reserva no encontrada');
         }
-
 
         return view('reserva/editReserva', ['reserva' => $reserva]);
 
