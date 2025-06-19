@@ -44,66 +44,46 @@
                             <th>Acciones</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <?php if (!empty($reservas)): ?>
-                            <?php foreach ($reservas as $reserva): ?>
-                                <tr>
-                                    <td><?= esc($reserva['id_res']) ?></td>
-                                    <td><?= esc($reserva['tema_res']) ?></td>
-                                    <td><?= esc($reserva['comentario_res']) ?></td>
-                                    <td><?= esc($reserva['estado_res']) ?></td>
-                                    <td><?= esc($reserva['fecha_hora_res']) ?></td>
-                                    <td><?= esc($reserva['duracion_res']) ?></td>
-                                    <td><?= esc($reserva['numero_participantes_res']) ?></td>
-                                    <td><?= esc($reserva['fecha_creacion_res']) ?></td>
-                                    <td><?= esc($reserva['fecha_actualizacion_res']) ?></td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <a href="<?= site_url('reserva/edit/' . $reserva['id_res']) ?>" 
-                                               class="btn btn-warning btn-sm">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                            <a href="<?= site_url('reserva/delete/' . $reserva['id_res']) ?>" 
-                                               class="btn btn-danger btn-sm"
-                                               onclick="return confirm('¿Estás seguro de eliminar esta reserva?')">
-                                                <i class="fas fa-trash"></i>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <tr>
-                                <td colspan="10" class="text-center">No se encontraron reservas</td>
-                            </tr>
-                        <?php endif; ?>
-                    </tbody>
+                    <tbody></tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Cargar las dependencias de jQuery y DataTables -->
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"></script>
-
 <script>
     $(document).ready(function() {
-        // Inicializar DataTable solo si hay datos
-        <?php if (!empty($reservas)): ?>
-            $('#reservaTable').DataTable({
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"
-                },
-                "columnDefs": [
-                    { "orderable": false, "targets": [9] } // Deshabilitar orden en columna de acciones
-                ],
-                "scrollX": true,  // Activar desplazamiento horizontal
-                "responsive": true // Hacer la tabla responsive
-            });
-        <?php endif; ?>
+        $('#reservaTable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: '<?= site_url('reserva/datatables') ?>',
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json'
+            },
+            columns: [
+                { data: 'id_reserva' },
+                { data: 'tema_res' },
+                { data: 'comentario_res' },
+                { data: 'estado_reserva' },
+                { data: 'fecha_hora_res' },
+                { data: 'duracion_res' },
+                { data: 'numero_participantes_res' },
+                { data: 'fecha_creacion_res' },
+                { data: 'fecha_actualizacion_res' },
+                {
+                    data: 'id_reserva',
+                    orderable: false,
+                    render: function(data, type, row) {
+                        return `<div class="btn-group">
+                                    <a href="<?= site_url('reserva/edit') ?>/${data}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
+                                    <a href="<?= site_url('reserva/delete') ?>/${data}" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar esta reserva?')"><i class="fas fa-trash"></i></a>
+                                </div>`;
+                    }
+                }
+            ],
+            scrollX: true,
+            responsive: true
+        });
     });
 </script>
 
