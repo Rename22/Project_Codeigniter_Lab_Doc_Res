@@ -42,6 +42,7 @@ class Database extends Config
         'strictOn'     => false,
         'failover'     => [],
         'port'         => 5432,
+        'schema'       => 'laboratorios',
         'numberNative' => false,
         'foundRows'    => false,
         'dateFormat'   => [
