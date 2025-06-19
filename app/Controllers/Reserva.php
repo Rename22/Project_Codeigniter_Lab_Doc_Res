@@ -17,17 +17,55 @@ class Reserva extends Controller
     public function index()
     {
         try {
+            // No cargamos todas las reservas para evitar problemas de memoria
+            // El listado se obtendrá de forma asíncrona mediante DataTables
             $data = [
-                'reservas' => $this->model->getAllReservas(),
                 'title' => 'Listado de Reservas'
             ];
-            
+
             return view('reserva/listReserva', $data);
         } catch (\Exception $e) {
             return view('errors/html/error_500', [
                 'message' => 'Error al cargar las reservas: ' . $e->getMessage()
             ]);
         }
+    }
+
+    /**
+     * Endpoint para DataTables (server-side processing)
+     */
+    public function datatables()
+    {
+        $request = service('request');
+
+        $start  = (int) $request->getGet('start');
+        $length = (int) $request->getGet('length');
+        $search = $request->getGet('search')['value'] ?? '';
+
+        $builder = $this->model->builder();
+        $builder->select('*');
+
+        $totalRecords = $builder->countAll();
+
+        if ($search !== '') {
+            $builder->groupStart()
+                ->like('tema_res', $search)
+                ->orLike('comentario_res', $search)
+                ->groupEnd();
+        }
+
+        $filteredRecords = $builder->countAllResults(false);
+
+        $builder->orderBy('id_reserva', 'DESC');
+        $builder->limit($length, $start);
+        $data = $builder->get()->getResultArray();
+
+        return $this->response->setJSON([
+            'draw'            => intval($request->getGet('draw')), 
+            'recordsTotal'    => $totalRecords,
+            'recordsFiltered' => $filteredRecords,
+            'data'            => $data,
+        ]);
     }
 
     public function delete($id)
