@@ -32,3 +32,4 @@ $routes->delete('docente/delete/(:num)', 'Docente::delete/$1');
 // Rutas para Reservas
 $routes->get('reserva', 'Reserva::index');
 $routes->get('reserva/delete/(:num)', 'Reserva::delete/$1');
+$routes->get('reserva/datatables', 'Reserva::datatables');
