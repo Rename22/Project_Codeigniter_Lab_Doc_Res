@@ -17,7 +17,8 @@
                 </div>
             <?php endif; ?>
 
-            <form action="/reserva/store" method="post">
+            <form action="<?= site_url('reserva/store') ?>" method="post">
+                <?= csrf_field() ?>
                 <div class="form-group">
                     <label for="fk_id_lab">Laboratorio</label>
                     <select name="fk_id_lab" id="fk_id_lab" class="form-control" required>
