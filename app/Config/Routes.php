@@ -31,4 +31,8 @@ $routes->delete('docente/delete/(:num)', 'Docente::delete/$1');
 
 // Rutas para Reservas
 $routes->get('reserva', 'Reserva::index');
+$routes->get('reserva/create', 'Reserva::create');
+$routes->post('reserva/store', 'Reserva::store');
+$routes->get('reserva/edit/(:num)', 'Reserva::edit/$1');
+$routes->post('reserva/update/(:num)', 'Reserva::update/$1');
 $routes->get('reserva/delete/(:num)', 'Reserva::delete/$1');
