@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-12">
             <h1 class="text-center mt-5">Listado de Reservas</h1>
-            
+
             <!-- Botones de acción -->
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <a href="<?= site_url('reserva/create') ?>" class="btn btn-primary">
@@ -20,7 +20,7 @@
                     <?= session('success') ?>
                 </div>
             <?php endif; ?>
-            
+
             <?php if (session()->has('error')): ?>
                 <div class="alert alert-danger">
                     <?= session('error') ?>
@@ -29,15 +29,18 @@
 
             <!-- Tabla de reservas -->
             <div class="table-responsive">
-                <table id="reservaTable" class="table table-striped table-bordered">
+                <table id="reservaTable" class="table table-striped table-bordered" style="width:100%">
                     <thead>
                         <tr>
                             <th>ID</th>
                             <th>Tema</th>
+                            <th>Comentario</th>
                             <th>Estado</th>
                             <th>Fecha/Hora</th>
                             <th>Duración</th>
                             <th>Participantes</th>
+                            <th>Fecha Creación</th>
+                            <th>Fecha Actualización</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -47,10 +50,13 @@
                                 <tr>
                                     <td><?= esc($reserva['id_res']) ?></td>
                                     <td><?= esc($reserva['tema_res']) ?></td>
+                                    <td><?= esc($reserva['comentario_res']) ?></td>
                                     <td><?= esc($reserva['estado_res']) ?></td>
                                     <td><?= esc($reserva['fecha_hora_res']) ?></td>
                                     <td><?= esc($reserva['duracion_res']) ?></td>
                                     <td><?= esc($reserva['numero_participantes_res']) ?></td>
+                                    <td><?= esc($reserva['fecha_creacion_res']) ?></td>
+                                    <td><?= esc($reserva['fecha_actualizacion_res']) ?></td>
                                     <td>
                                         <div class="btn-group">
                                             <a href="<?= site_url('reserva/edit/' . $reserva['id_res']) ?>" 
@@ -68,7 +74,7 @@
                             <?php endforeach; ?>
                         <?php else: ?>
                             <tr>
-                                <td colspan="7" class="text-center">No se encontraron reservas</td>
+                                <td colspan="10" class="text-center">No se encontraron reservas</td>
                             </tr>
                         <?php endif; ?>
                     </tbody>
@@ -77,6 +83,11 @@
         </div>
     </div>
 </div>
+
+<!-- Cargar las dependencias de jQuery y DataTables -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"></script>
 
 <script>
     $(document).ready(function() {
@@ -87,8 +98,10 @@
                     "url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"
                 },
                 "columnDefs": [
-                    { "orderable": false, "targets": [6] } // Deshabilitar orden en columna de acciones
-                ]
+                    { "orderable": false, "targets": [9] } // Deshabilitar orden en columna de acciones
+                ],
+                "scrollX": true,  // Activar desplazamiento horizontal
+                "responsive": true // Hacer la tabla responsive
             });
         <?php endif; ?>
     });
