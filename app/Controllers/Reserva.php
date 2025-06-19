@@ -37,7 +37,6 @@ class Reserva extends Controller
     {
         return view('reserva/addReserva');
 
-
     }
 
     public function store()
@@ -74,7 +73,6 @@ class Reserva extends Controller
                 'software_res'                 => $this->request->getPost('software_res'),
                 'tipo_res'                     => $this->request->getPost('tipo_res'),
                 'pedidodocente_res'            => $this->request->getPost('pedidodocente_res'),
-
 
             ];
 
