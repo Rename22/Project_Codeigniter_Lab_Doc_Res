@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use App\Models\ReservaModel;
+use App\Models\LaboratorioModel;
+use App\Models\DocenteModel;
 use CodeIgniter\Controller;
 
 class Reserva extends Controller
@@ -33,13 +35,16 @@ class Reserva extends Controller
 
     public function create()
     {
+
         return view('reserva/addReserva');
+
     }
 
     public function store()
     {
         try {
             $data = [
+
                 'fk_id_tipres'                  => $this->request->getPost('fk_id_tipres'),
                 'fk_id_doc'                    => $this->request->getPost('fk_id_doc'),
                 'fk_id_lab'                    => $this->request->getPost('fk_id_lab'),
@@ -70,6 +75,7 @@ class Reserva extends Controller
                 'software_res'                 => $this->request->getPost('software_res'),
                 'tipo_res'                     => $this->request->getPost('tipo_res'),
                 'pedidodocente_res'            => $this->request->getPost('pedidodocente_res'),
+
             ];
 
             if ($this->model->save($data)) {
@@ -93,13 +99,16 @@ class Reserva extends Controller
             return redirect()->back()->with('error', 'Reserva no encontrada');
         }
 
+
         return view('reserva/editReserva', ['reserva' => $reserva]);
+
     }
 
     public function update($id)
     {
         try {
             $data = [
+
                 'fk_id_tipres'                  => $this->request->getPost('fk_id_tipres'),
                 'fk_id_doc'                    => $this->request->getPost('fk_id_doc'),
                 'fk_id_lab'                    => $this->request->getPost('fk_id_lab'),
@@ -130,6 +139,7 @@ class Reserva extends Controller
                 'software_res'                 => $this->request->getPost('software_res'),
                 'tipo_res'                     => $this->request->getPost('tipo_res'),
                 'pedidodocente_res'            => $this->request->getPost('pedidodocente_res'),
+
             ];
 
             if ($this->model->update($id, $data)) {

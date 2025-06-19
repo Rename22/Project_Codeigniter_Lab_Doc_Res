@@ -14,6 +14,7 @@
                     </ul>
                 </div>
             <?php endif; ?>
+
             <form action="<?= site_url('reserva/store') ?>" method="post">
                 <?= csrf_field() ?>
                 <div class="form-group">
