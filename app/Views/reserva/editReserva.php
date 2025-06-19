@@ -14,11 +14,13 @@
                     </ul>
                 </div>
             <?php endif; ?>
+
             <form action="<?= site_url('reserva/update/' . $reserva['id_reserva']) ?>" method="post">
                 <?= csrf_field() ?>
                 <div class="form-group">
                     <label for="fk_id_tipres">ID Tipo Reserva</label>
                     <input type="number" name="fk_id_tipres" id="fk_id_tipres" class="form-control" value="<?= esc($reserva['fk_id_tipres']) ?>" required>
+
                 </div>
                 <div class="form-group">
                     <label for="fk_id_doc">ID Docente</label>
